@@ -29,6 +29,12 @@
 			"capitallinkoverride": false
 		}
 	],
+	"ExtensionMessagesFiles": {
+		"TouhouThemeDBMagic": "TouhouThemeDB.i18n.magic.php"
+	},
+	"Hooks": {
+		"ParserFirstCallInit": "TouhouThemeDB\\Hooks::onParserFirstCallInit"
+	},
 	"callback": "TouhouThemeDB\\Hooks::onRegistration",
 	"manifest_version": 2
 }
