@@ -11,7 +11,8 @@
 		}
 	},
 	"AutoloadNamespaces": {
-		"TouhouThemeDB\\": "includes/"
+		"TouhouThemeDB\\": "includes/",
+		"TouhouThemeDB\\Api\\": "api/"
 	},
 	"namespaces": [
 		{
@@ -29,6 +30,10 @@
 			"capitallinkoverride": false
 		}
 	],
+	"APIListModules": {
+		"tdbtitles": "TouhouThemeDB\\Api\\TDBTitles",
+		"tdbrelations": "TouhouThemeDB\\Api\\TDBRelations"
+	},
 	"ExtensionMessagesFiles": {
 		"TouhouThemeDBMagic": "TouhouThemeDB.i18n.magic.php"
 	},
