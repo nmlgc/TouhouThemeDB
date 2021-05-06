@@ -185,9 +185,9 @@ class Title {
 	}
 
 	/**
-	 * @return string|null
+	 * @return string|null Empty string for nonexistent translations, null for invalid theme IDs.
 	 */
-	public static function lookup( string $id, string $lang = 'ja' ) {
+	public static function lookup( string $id, string $lang = 'ja' ): ?string {
 		$group = self::getGroup();
 
 		// Per-language message collection cache.
@@ -203,6 +203,12 @@ class Title {
 			$collections[$lang] = $group->initCollection( $lang );
 			$collections[$lang]->loadTranslations();
 		}
-		return $collections[$lang][$id]->translation();
+
+		// Nonexistent themes really shouldn't raise an exception that prevents an entire page
+		// from rendering.
+		if ( !isset( $collections[$lang][$id] ) ) {
+			return null;
+		}
+		return $collections[$lang][$id]->translation() ?? "";
 	}
 };
