@@ -2,7 +2,7 @@
 
 namespace TouhouThemeDB;
 
-use MessageGroup, MessageGroups;
+use MessageGroup, MessageGroups, SpecialPage;
 
 class Title {
 	protected const GROUP_ID = 'themedb';
@@ -210,5 +210,38 @@ class Title {
 			return null;
 		}
 		return $collections[$lang][$id]->translation() ?? "";
+	}
+
+	/**
+	 * Combines a lookup with an edit link. Falls back on regular lookup if ($lang === 'ja').
+	 *
+	 * @return string|null Edit link, or null for invalid theme IDs.
+	 */
+	public static function lookupEditLink( string $id, string $lang ): ?string {
+		// See TranslatablePage::getTranslationUrl()
+		static $translatePage = null;
+
+		$title = self::lookup( $id, $lang );
+		if ( $title === null ) {
+			return null;
+		}
+
+		if ( $lang === 'ja' ) {
+			return $title;
+		}
+
+		if ( isset( self::REDIRECTS[$id] ) ) {
+			$id = self::REDIRECTS[$id];
+		}
+
+		$translatePage ??= SpecialPage::getTitleFor( 'Translate' )->getFullURL( [
+			'group' => self::GROUP_ID,
+			'filter' => '', // yup, defaults to '!translated' otherwise
+			'language' => $lang,
+		] );
+		if ( $title === '' ) {
+			$title = "\u{200B}"; // just to get rid of the automatically generated number
+		}
+		return "[$translatePage#$id $title]";
 	}
 };
