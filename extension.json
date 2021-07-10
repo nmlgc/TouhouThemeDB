@@ -37,6 +37,11 @@
 	"ExtensionMessagesFiles": {
 		"TouhouThemeDBMagic": "TouhouThemeDB.i18n.magic.php"
 	},
+	"MessagesDirs": {
+		"TouhouThemeDB": [
+			"i18n"
+		]
+	},
 	"Hooks": {
 		"ParserFirstCallInit": "TouhouThemeDB\\Hooks::onParserFirstCallInit"
 	},
